@@ -1,5 +1,5 @@
 const authController = require("./authController");
-const userController = require("./userController");
+const profileController = require("./profileController");
 const contentController = require("./contentController");
 
-module.exports = { authController, userController, contentController };
+module.exports = { authController, profileController, contentController };
