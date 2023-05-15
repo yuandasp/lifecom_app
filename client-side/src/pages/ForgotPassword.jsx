@@ -9,23 +9,20 @@ import { useDispatch } from "react-redux";
 import { authToken } from "../helpers/constant";
 import { Button } from "@chakra-ui/react";
 
-function Login() {
+function ForgotPassword() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
   const loginSchema = Yup.object().shape({
-    input: Yup.string().required("This field is required"),
-    password: Yup.string()
-      .required("This field is required")
-      .min(8, "Password too short"),
+    email: Yup.string().required("This field is required"),
   });
 
-  const loginUser = async (value, actions) => {
+  const resetPassword = async (value, actions) => {
     try {
       setIsLoading(true);
       let response = await axios.post(
-        "http://localhost:2000/auth/login",
+        `${process.env.REACT_APP_API_BE}/auth/reset-password`,
         value
       );
 
@@ -37,11 +34,7 @@ function Login() {
       });
       setIsLoading(false);
 
-      if (response.data?.token) {
-        localStorage.setItem(authToken, response.data?.token);
-        dispatch(setUser(response.data.data));
-        navigate("/");
-      }
+      navigate("/login");
     } catch (error) {
       setIsLoading(false);
       Swal.fire({
@@ -56,12 +49,11 @@ function Login() {
     <div>
       <Formik
         initialValues={{
-          input: "",
-          password: "",
+          email: "",
         }}
         validationSchema={loginSchema}
         onSubmit={(value, actions) => {
-          loginUser(value);
+          resetPassword(value);
         }}
       >
         {(props) => {
@@ -71,10 +63,7 @@ function Login() {
                 <div className="w-full h-2/5 max-w-lg my-auto px-14 py-4 bg-white border rounded-md box-shadow-register">
                   <div className="flex gap-2 items-end justify-center">
                     <p className="text-center text-2xl text-purple-900">
-                      Login to
-                    </p>
-                    <p className="text-center text-4xl font-bold text-purple-700 tracking-tighter">
-                      Cashier App
+                      Reset Password
                     </p>
                   </div>
                   <Form className="mt-8 space-y-6" action="#" method="POST">
@@ -82,43 +71,24 @@ function Login() {
                     <div className="rounded-md shadow-sm">
                       <div className="my-4">
                         <label
-                          htmlFor="input"
+                          htmlFor="email"
                           className="sr-only block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          Email address
+                          Email
                         </label>
                         <Field
-                          id="input"
-                          name="input"
+                          id="email"
+                          name="email"
                           type="text"
-                          autoComplete="input"
+                          autoComplete="email"
                           required
                           className="pl-4 relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-purple-900 sm:text-sm sm:leading-6"
-                          placeholder="Email or username"
+                          placeholder="Email"
                         />
 
                         <ErrorMessage
                           component="div"
-                          name="input"
-                          style={{ color: "red", fontSize: "12px" }}
-                        />
-                      </div>
-                      <div className="my-4">
-                        <label htmlFor="password" className="sr-only">
-                          Password
-                        </label>
-                        <Field
-                          id="password"
-                          name="password"
-                          type="password"
-                          required
-                          className="pl-4 relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-purple-900 sm:text-sm sm:leading-6"
-                          placeholder="Password"
-                          autoComplete="new-password"
-                        />
-                        <ErrorMessage
-                          component="div"
-                          name="password"
+                          name="email"
                           style={{ color: "red", fontSize: "12px" }}
                         />
                       </div>
@@ -130,23 +100,13 @@ function Login() {
                         type="submit"
                         className="group relative flex w-full justify-center rounded-md bg-purple-900 px-3 py-2 text-lg font-semibold text-white hover:bg-purple-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                       >
-                        Log in
+                        Send reset password link
                       </Button>
 
-                      <div className="flex gap-2 items-end justify-end py-1">
-                        <p className="text-purple-900 text-end text-xs my-2 ">
-                          Don't have an account?
-                        </p>
-                        <Link to={"/register"}>
-                          <p className="text-purple-900 text-end font-bold text-sm my-2 hover:text-purple-600">
-                            Sign up
-                          </p>
-                        </Link>
-                      </div>
-                      <Link to={"/reset-password"}>
+                      <Link to={"/login"}>
                         <div className="flex gap-2 items-end justify-end py-1">
                           <p className="text-purple-900 text-end text-xs my-2 ">
-                            Forgot Password
+                            Back to login
                           </p>
                         </div>
                       </Link>
@@ -162,4 +122,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default ForgotPassword;
