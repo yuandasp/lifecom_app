@@ -81,7 +81,7 @@ function Login() {
                       Login to
                     </p>
                     <p className="text-center text-4xl font-bold text-blue-900 tracking-tighter">
-                      Cashier App
+                      Lifecom App
                     </p>
                   </div>
                   <Form className="mt-8 space-y-6" action="#" method="POST">
