@@ -259,7 +259,7 @@ function Profile() {
                       className=""
                       src={`${process.env.REACT_APP_API_BE}/${content.media}`}
                     />
-                    <p className="m-4">{content.caption}</p>
+                    {/* <p className="m-4">{content.caption}</p> */}
                     <CardFooter
                       justify="space-between"
                       flexWrap="wrap"
