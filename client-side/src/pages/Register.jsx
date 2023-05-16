@@ -73,7 +73,7 @@ function Register() {
           return (
             <>
               <div className="flex h-screen items-start justify-center px-4 py-8 sm:px-6 lg:px-8 bg-blue-900">
-                <div className="w-full h-2/3 max-w-lg py-11 px-14 bg-slate-50 rounded-md box-shadow-register">
+                <div className="w-full h-2/4 max-w-lg my-auto py-11 px-14 bg-slate-50 rounded-md box-shadow-register">
                   <div className="flex gap-2 items-end justify-center">
                     <p className="text-center text-2xl text-blue-900">
                       Sign up to

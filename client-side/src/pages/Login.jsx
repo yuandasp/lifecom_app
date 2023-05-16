@@ -74,13 +74,13 @@ function Login() {
         {(props) => {
           return (
             <>
-              <div className="flex h-screen items-start justify-center px-4 sm:px-6 lg:px-8 bg-slate-50">
+              <div className="flex h-screen items-start justify-center px-4 sm:px-6 lg:px-8 bg-blue-900">
                 <div className="w-full h-2/5 max-w-lg my-auto px-14 py-4 bg-white border rounded-md box-shadow-register">
                   <div className="flex gap-2 items-end justify-center">
-                    <p className="text-center text-2xl text-purple-900">
+                    <p className="text-center text-2xl text-blue-900">
                       Login to
                     </p>
-                    <p className="text-center text-4xl font-bold text-purple-700 tracking-tighter">
+                    <p className="text-center text-4xl font-bold text-blue-900 tracking-tighter">
                       Cashier App
                     </p>
                   </div>
@@ -100,7 +100,7 @@ function Login() {
                           type="text"
                           autoComplete="input"
                           required
-                          className="pl-4 relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-purple-900 sm:text-sm sm:leading-6"
+                          className="pl-4 relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-900 sm:text-sm sm:leading-6"
                           placeholder="Email or username"
                         />
 
@@ -119,7 +119,7 @@ function Login() {
                           name="password"
                           type={show ? "text" : "password"}
                           required
-                          className="pl-4 relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-purple-900 sm:text-sm sm:leading-6"
+                          className="pl-4 relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-900 sm:text-sm sm:leading-6"
                           placeholder="Password"
                           autoComplete="new-password"
                         />
@@ -145,24 +145,24 @@ function Login() {
                         isLoading={isLoading}
                         colorScheme="blue"
                         type="submit"
-                        className="group relative flex w-full justify-center rounded-md bg-purple-900 px-3 py-2 text-lg font-semibold text-white hover:bg-purple-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                        className="group relative flex w-full justify-center rounded-md bg-blue-900 px-3 py-2 text-lg font-semibold text-white hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                       >
                         Log in
                       </Button>
 
                       <div className="flex gap-2 items-end justify-end py-1">
-                        <p className="text-purple-900 text-end text-xs my-2 ">
+                        <p className="text-blue-900 text-end text-xs my-2 ">
                           Don't have an account?
                         </p>
                         <Link to={"/register"}>
-                          <p className="text-purple-900 text-end font-bold text-sm my-2 hover:text-purple-600">
+                          <p className="text-blue-900 text-end font-bold text-sm my-2 hover:text-blue-600">
                             Sign up
                           </p>
                         </Link>
                       </div>
                       <Link to={"/reset-password"}>
                         <div className="flex gap-2 items-end justify-end py-1">
-                          <p className="text-purple-900 text-end text-xs my-2 ">
+                          <p className="text-blue-900 text-end text-xs my-2 ">
                             Forgot Password
                           </p>
                         </div>
