@@ -53,14 +53,12 @@ module.exports = {
   uploadProfilePicture: async (req, res) => {
     try {
       const { file } = req;
+      const idUser = req.user.id;
       const filepath = file ? "/" + file.filename : null;
-
-      let data = JSON.parse(req.body.data);
-      console.log("data:", data);
       let response = await query(
-        `UPDATE user SET image=${db.escape(filepath)} WHERE id_user=${db.escape(
-          data.id
-        )}`
+        `UPDATE user SET profile_picture=${db.escape(
+          filepath
+        )} WHERE id_user=${db.escape(idUser)}`
       );
       console.log(response);
       // res.status(200).send({ filepath });

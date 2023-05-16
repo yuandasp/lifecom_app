@@ -4,8 +4,6 @@ const { v4: uuidv4 } = require("uuid");
 module.exports = {
   createContent: async (req, res) => {
     try {
-      console.log("req ", req);
-      console.log("req.body ", req.body);
       const idUser = req.user.id;
       const { file } = req;
       const filepath = file ? "/" + file.filename : null;
@@ -76,7 +74,24 @@ module.exports = {
   },
   getAllContent: async (req, res) => {
     try {
-      const getAllContentQuery = "SELECT * FROM content;";
+      const getAllContentQuery = `with cte_likes as (
+        select id_content, count(*) as total_likes
+        from user_content
+        group by id_content
+        )
+      select c.id_content, 
+        c.media,
+        c.uuid,
+        c.caption,
+        u.username,
+        u.fullname,
+        u.profile_picture,
+        coalesce(l.total_likes, 0) as likes
+      from content c
+      left join cte_likes l
+      on c.id_content = l.id_content
+      left join user u
+      on c.id_user = u.id_user;`;
       const getAllContent = await query(getAllContentQuery);
 
       return res.status(200).send(getAllContent);
@@ -88,9 +103,26 @@ module.exports = {
     try {
       const idParams = req.params.uuid;
 
-      const getDetailContentQuery = `SELECT * FROM content WHERE uuid = ${db.escape(
-        idParams
-      )}`;
+      const getDetailContentQuery = `with cte_likes as (
+        select id_content, count(*) as total_likes
+        from user_content
+        group by id_content
+      )
+      select c.id_content, 
+        c.media,
+        c.caption,
+        u.id_user,
+        u.username,
+        u.fullname,
+        u.profile_picture,
+        u.bio,
+        coalesce(l.total_likes, 0) as likes
+      from content c
+      left join cte_likes l
+      on c.id_content = l.id_content
+      left join user u
+      on c.id_user = u.id_user
+      where c.uuid = ${db.escape(idParams)};`;
       const getDetailContent = await query(getDetailContentQuery);
 
       return res.status(200).send(getDetailContent);
@@ -114,10 +146,26 @@ module.exports = {
         const addLikes = await query(addLikesQuery);
       }
 
-      const countLikesQuery = `SELECT * FROM user_content WHERE id_content=${idContent}`;
-      const countLikes = await query(countLikesQuery);
+      const getAllContentQuery = `with cte_likes as (
+        select id_content, count(*) as total_likes
+        from user_content
+        group by id_content
+        )
+      select c.id_content, 
+        c.media,
+        c.caption,
+        u.username,
+        u.fullname,
+        u.profile_picture,
+        coalesce(l.total_likes, 0) as likes
+      from content c
+      left join cte_likes l
+      on c.id_content = l.id_content
+      left join user u
+      on c.id_user = u.id_user;`;
+      const getAllContent = await query(getAllContentQuery);
 
-      return res.status(200).send(countLikes);
+      return res.status(200).send(getAllContent);
     } catch (error) {
       return res.status(error.status || 500).send(error);
     }
@@ -130,6 +178,17 @@ module.exports = {
       const countLikes = await query(countLikesQuery);
 
       return res.status(200).send(countLikes);
+    } catch (error) {
+      return res.status(error.status || 500).send(error);
+    }
+  },
+  getAllContentByIdUser: async (req, res) => {
+    try {
+      const idUser = req.user.id;
+      const getAllContentByIdQuery = `SELECT * FROM content WHERE id_user=${idUser};`;
+      const getAllContentById = await query(getAllContentByIdQuery);
+
+      return res.status(200).send(getAllContentById);
     } catch (error) {
       return res.status(error.status || 500).send(error);
     }

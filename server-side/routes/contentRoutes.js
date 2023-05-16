@@ -21,6 +21,7 @@ router.delete(
   contentController.deleteContent
 );
 router.get("/", verifyToken, contentController.getAllContent);
+router.get("/user", verifyToken, contentController.getAllContentByIdUser);
 router.get("/:uuid", verifyToken, contentController.getContentDetail);
 router.post("/:id/likes", verifyToken, contentController.likesFeature);
 router.get("/:id/likes", verifyToken, contentController.getLikes);

@@ -7,12 +7,19 @@ import Swal from "sweetalert2";
 import { setUser } from "../features/user/userSlice";
 import { useDispatch } from "react-redux";
 import { authToken } from "../helpers/constant";
-import { Button } from "@chakra-ui/react";
+import {
+  Button,
+  Checkbox,
+  Input,
+  InputGroup,
+  InputRightElement,
+} from "@chakra-ui/react";
 
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const [show, setShow] = useState(false);
 
   const loginSchema = Yup.object().shape({
     input: Yup.string().required("This field is required"),
@@ -110,7 +117,7 @@ function Login() {
                         <Field
                           id="password"
                           name="password"
-                          type="password"
+                          type={show ? "text" : "password"}
                           required
                           className="pl-4 relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-purple-900 sm:text-sm sm:leading-6"
                           placeholder="Password"
@@ -123,6 +130,16 @@ function Login() {
                         />
                       </div>
                     </div>
+                    <Checkbox
+                      style={{
+                        background: "transparent",
+                        color: "black",
+                        marginTop: "0px",
+                      }}
+                      onChange={(event) => setShow(event.target.checked)}
+                    >
+                      <p style={{ fontSize: "14px" }}>Show Password</p>
+                    </Checkbox>
                     <div>
                       <Button
                         isLoading={isLoading}
